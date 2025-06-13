@@ -1,0 +1,99 @@
+﻿<Page x:Class="Demo.Pages.UserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Demo.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UserPage" Background="Snow">
+    
+
+    <Grid>
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок -->
+            <TextBlock Grid.Row="0" Text="Hotel Performance Dashboard" 
+                  FontSize="22" FontWeight="Bold" Margin="0,0,0,15"/>
+
+            <!-- Ключевые показатели -->
+            <Border Grid.Row="1" Background="White" CornerRadius="5" Padding="15"
+                BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="0,0,0,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Occupancy Rate -->
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="Occupancy Rate" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding OccupancyRate}" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding OccupancyTrend}" Foreground="Green" FontSize="12"/>
+                    </StackPanel>
+
+                    <!-- ADR -->
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                        <TextBlock Text="ADR (Average Daily Rate)" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding ADR, StringFormat=C}" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding ADRTrend}" Foreground="Green" FontSize="12"/>
+                    </StackPanel>
+
+                    <!-- RevPAR -->
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                        <TextBlock Text="RevPAR" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding RevPAR, StringFormat=C}" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding RevPARTrend}" Foreground="Green" FontSize="12"/>
+                    </StackPanel>
+
+                    <!-- Total Revenue -->
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Center">
+                        <TextBlock Text="Monthly Revenue" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding MonthlyRevenue, StringFormat=C}" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding RevenueTrend}" Foreground="Green" FontSize="12"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Отчеты и действия -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,15">
+                <TextBlock Text="Reports " FontSize="16" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center"/>
+
+                <Button Content="Generate Monthly Report" 
+                    Command="{Binding GenerateMonthlyReportCommand}"
+                    Width="180" Padding="10,5" Margin="0,0,10,0"/>
+
+                <Button Content="Generate Financial Summary" 
+                    Command="{Binding GenerateFinancialSummaryCommand}"
+                    Width="180" Padding="10,5" Margin="0,0,10,0"/>
+
+                <Button Content="Refresh Data" 
+                    Click="RefreshData_Click"
+                    Width="120" Padding="10,5"/>
+            </StackPanel>
+
+            <!-- Таблица с данными -->
+            <DataGrid Grid.Row="3" x:Name="dataGridDR" AutoGenerateColumns="False" 
+                     IsReadOnly="True" Background="White" BorderBrush="#FFDDDDDD">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Order ID" Binding="{Binding OrderID}" Width="Auto"/>
+                    <DataGridTextColumn Header="Client ID" Binding="{Binding ClientID}" Width="Auto"/>
+                    <DataGridTextColumn Header="Room ID" Binding="{Binding RoomID}" Width="Auto"/>
+                    <DataGridTextColumn Header="Check-In" Binding="{Binding CheckIn, StringFormat={}{0:dd.MM.yyyy}}" Width="Auto"/>
+                    <DataGridTextColumn Header="Check-Out" Binding="{Binding CheckOut, StringFormat={}{0:dd.MM.yyyy}}" Width="Auto"/>
+                    <DataGridTextColumn Header="Room Price" Binding="{Binding Room.Price, StringFormat=C}" Width="Auto"/>
+                    <DataGridTextColumn Header="Nights" Width="Auto">
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>
